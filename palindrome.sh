@@ -1,6 +1,7 @@
 #!/bin/bash
 read -p "Please enter a number : " num
-if [[ -z $num ]] || [[ $num =~ [0-9] ]] || [[ $num =~ [a-zA-Z] ]]
+if [[ -z $num ]] || ! [[ -z $( echo $num | tr -d {0-9} ) ]] 
+#! [[ $num =~ [0-9] ]] || [[ $num =~ [a-zA-Z] ]]
 then
    echo "Please enter a valid number"
 elif [[ $( echo $num | rev) == $num ]]
