@@ -6,5 +6,6 @@ echo -e "\e[0;34;47m Server config : \e[0m "
 echo "----------------"
 echo "Processor : "
 echo "$(grep "model name\|cpu MHz" /proc/cpuinfo)"
+#awk '/model\ name|cpu\ MHz/{print}' /proc/cpuinfo
 echo "Memory : "
 
