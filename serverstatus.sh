@@ -10,6 +10,6 @@ echo "$(grep "model name\|cpu MHz" /proc/cpuinfo)"
 #awk '/model\ name|cpu\ MHz/{print}' /proc/cpuinfo
 echo -e "\e[4mCurrent Usage : \e[0m"
 echo "$(ps -eo pcpu,pid,user,args |sort -k 1 -r| head -10)"
-echo "----------------"
-echo "---Memory---"
-
+echo -e "\e[4m----------------\e[0m"
+echo -e "\e[4m---Memory---\e[0m"
+free -m | awk '{if (NR==1) print ":",$1,":",$2,":",$3; else print $1,$2,":",$3,":",$4}' | column -t -s ":"
