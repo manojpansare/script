@@ -13,3 +13,44 @@ echo "$(ps -eo pcpu,pid,user,args |sort -k 1 -r| head -10)"
 echo -e "\e[4m----------------\e[0m"
 echo -e "\e[4m---Memory---\e[0m"
 free -m | awk '{if (NR==1) print ":",$1,":",$2,":",$3; else print $1,$2,":",$3,":",$4}' | column -t -s ":"
+
+#-----------------------------------------------------------------------------
+#!/bin/bash
+#Date : Sat Nov 26 19:10:55 IST 2016
+#Purpose : To check server status
+#Author : Manoj
+
+#
+##Functions
+#
+check_mem () {
+      echo "Memory Status"
+      free -m
+}
+check_disk () {
+      echo "Disk Status"
+      df -h
+}
+check_cpu () {
+      echo "CPU Status"
+      echo "uptime is $(uptime)"
+      ps -eo pcpu,pid,args | sort -k 1 -r | head -10
+}
+
+#
+##Main
+#
+
+#Create Menu
+whiptail  --menu "ServerStatus" 12 50 3 \
+                1 Check_CPU \
+                2 Check_Memory \
+                3 Check_Disk \
+                              2> /tmp/option
+
+#Check the selected Item
+a=$(cat /tmp/option)
+case $a in
+
+#----------------------------------------------------
+
