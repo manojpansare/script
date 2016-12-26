@@ -22,17 +22,40 @@ rel=$(lsb_release -a)
 
 case  $rel in 
     *CentOS*|*Fedora*|*Redhat*)
-	echo "Redhat"
+	rel_ver="Redhat"
     ;;
     *Ubuntu*|*Debian*)
-	echo "Ubuntu"
+	rel_ver="Ubuntu"
     ;;
     *)
 	echo "Unknown version"
     ;;
 esac
 }
-
+apache_status () {
+os_release_version
+if [[ $rel_ver == "Redhat" ]] 
+then
+    service httpd status >/dev/null 2>&1
+    if [[ $? = 0 ]]
+    then
+         service httpd start
+    else
+         yum -y install httpd
+         service httpd start
+    fi
+else
+    service apache2 status >/dev/null 2>&1
+    if [[ $? = 0 ]]
+    then
+         service apache2 start
+    else
+         apt-get update
+         apt-get -y install apache2
+         service apache2 start
+    fi
+fi
+}
 
 ##Main
-os_release_version
+apache_status
